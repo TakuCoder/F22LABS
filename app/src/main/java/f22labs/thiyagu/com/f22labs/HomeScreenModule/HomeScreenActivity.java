@@ -47,9 +47,10 @@ public class HomeScreenActivity extends AppCompatActivity implements HomeScreenC
 
         InitView();
         InitPresenter();
+        presenter.deleteDb();
         startShimmer();
         getFoodList();
-        presenter.deleteDb();
+
 //        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
 //        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
 //        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
@@ -75,7 +76,7 @@ public class HomeScreenActivity extends AppCompatActivity implements HomeScreenC
 //
 //
 //                    FoodPojo foodPojo = new FoodPojo(String.valueOf(list.get(i).getAverageRating()),list.get(i).getImageUrl(),list.get(i).getItemName(),String.valueOf(list.get(i).getItemPrice()));
-//                    databaseHelper.addProduct(foodPojo);
+////                    databaseHelper.addProduct(foodPojo);
 //
 //                }
 //
@@ -174,17 +175,26 @@ else if(item.getItemId()==R.id.cart)
     protected void onResume() {
         super.onResume();
 
+//       // list = presenter.resume();
+////        list = databaseHelper.getAllProducts();
+//      mAdapter = new FoodRecyclerViewAdapter(list,HomeScreenActivity.this);
+//       mRecyclerView.setAdapter(mAdapter);
+//       stopShimmer();
 
-        list = databaseHelper.getAllProducts();
-        mAdapter = new FoodRecyclerViewAdapter(list,HomeScreenActivity.this);
-        mRecyclerView.setAdapter(mAdapter);
-        stopShimmer();
+        presenter.resume();
 
     }
 
     @Override
     public void showToast(String s) {
         Toast.makeText(HomeScreenActivity.this,s,Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void ShowResumeData(List<Food> list) {
+        mAdapter = new FoodRecyclerViewAdapter(list,HomeScreenActivity.this);
+        mRecyclerView.setAdapter(mAdapter);
+        stopShimmer();
     }
 
 
@@ -200,7 +210,7 @@ else if(item.getItemId()==R.id.cart)
 
 
     public void InitPresenter() {
-        presenter = new HomeScreenPresenter(this);
+        presenter = new HomeScreenPresenter(this,this);
     }
 
     @Override

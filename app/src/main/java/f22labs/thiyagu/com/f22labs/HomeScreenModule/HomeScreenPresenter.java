@@ -1,11 +1,13 @@
 package f22labs.thiyagu.com.f22labs.HomeScreenModule;
 
+import android.content.Context;
 import android.util.Log;
 
 import java.util.List;
 
 import f22labs.thiyagu.com.f22labs.App;
 import f22labs.thiyagu.com.f22labs.Data.Food;
+import f22labs.thiyagu.com.f22labs.Data.FoodPojo;
 import f22labs.thiyagu.com.f22labs.Database.DatabaseHelper;
 import f22labs.thiyagu.com.f22labs.Network.NetworkClient;
 import f22labs.thiyagu.com.f22labs.Network.NetworkInterface;
@@ -17,14 +19,15 @@ import io.reactivex.schedulers.Schedulers;
 import static android.support.constraint.Constraints.TAG;
 
 public class HomeScreenPresenter implements HomeScreenContract.Presenter {
-DatabaseHelper databaseHelper;
+    DatabaseHelper databaseHelper;
 
     HomeScreenContract.View mvi;
+    Context context;
 
-
-    HomeScreenPresenter(HomeScreenContract.View mvi) {
+    HomeScreenPresenter(HomeScreenContract.View mvi, Context context) {
         this.mvi = mvi;
-
+        this.context = context;
+        databaseHelper = new DatabaseHelper(context);
     }
 
 
@@ -35,8 +38,17 @@ DatabaseHelper databaseHelper;
 
     @Override
     public void deleteDb() {
-        databaseHelper =new DatabaseHelper(App.getContext());
-        databaseHelper.deletedata();
+        DatabaseHelper.getInstance(context).deletedata();
+
+    }
+
+    @Override
+    public void resume() {
+
+
+        List<Food> list = DatabaseHelper.getInstance(context).getAllProducts();
+        Log.v("sdsad", String.valueOf(list.size()));
+        mvi.ShowResumeData(list);
     }
 
 
@@ -56,8 +68,14 @@ DatabaseHelper databaseHelper;
             public void onNext(List<Food> foods) {
                 Log.d(TAG, "OnNext" + foods.get(0).getImageUrl());
 
+                for (int i = 0; i < foods.size(); i++) {
 
+                    FoodPojo foodPojo = new FoodPojo(String.valueOf(foods.get(i).getAverageRating()), foods.get(i).getImageUrl(), foods.get(i).getItemName(), String.valueOf(foods.get(i).getItemPrice()));
+                    databaseHelper.addProduct(foodPojo);
+
+                }
                 mvi.displayFoodItems(foods);
+                mvi.stopShimmer();
             }
 
             @Override
