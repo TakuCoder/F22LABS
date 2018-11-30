@@ -20,7 +20,7 @@ import com.bumptech.glide.request.RequestOptions;
 
 import java.util.List;
 
-import f22labs.thiyagu.com.f22labs.Activities.IndividualSelectionActivity;
+import f22labs.thiyagu.com.f22labs.IndividualSelectionActivityModule.IndividualSelectionActivity;
 import f22labs.thiyagu.com.f22labs.Data.CartDetails;
 import f22labs.thiyagu.com.f22labs.Data.Food;
 import f22labs.thiyagu.com.f22labs.Database.DatabaseHelper;

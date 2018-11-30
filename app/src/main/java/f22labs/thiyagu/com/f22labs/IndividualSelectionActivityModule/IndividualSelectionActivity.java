@@ -1,4 +1,4 @@
-package f22labs.thiyagu.com.f22labs.Activities;
+package f22labs.thiyagu.com.f22labs.IndividualSelectionActivityModule;
 
 import android.media.Image;
 import android.support.v7.app.AppCompatActivity;
@@ -16,28 +16,23 @@ import f22labs.thiyagu.com.f22labs.Data.CartDetails;
 import f22labs.thiyagu.com.f22labs.Database.DatabaseHelper;
 import f22labs.thiyagu.com.f22labs.R;
 
-public class IndividualSelectionActivity extends AppCompatActivity {
+public class IndividualSelectionActivity extends AppCompatActivity implements IndividualSelectionContract.view{
     Button minus;
     Button plus;
     ImageView imageview;
     TextView name, price, rating, quantity;
     DatabaseHelper databaseHelper;
-
+    private String item_name;
+    private String item_price;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_individual_selection);
-        final String item_name = getIntent().getStringExtra("itemname");
-        final String item_price  = getIntent().getStringExtra("price");
-        databaseHelper = new DatabaseHelper(this);
-        name = findViewById(R.id.name);
-        price = findViewById(R.id.price);
-        plus=findViewById(R.id.plus);
-        imageview = findViewById(R.id.imageview);
-        rating = findViewById(R.id.rating);
-        minus = findViewById(R.id.minus);
+        item_name = getIntent().getStringExtra("itemname");
+        item_price  = getIntent().getStringExtra("price");
+        initview();
 
-        quantity = findViewById(R.id.quantity);
+        databaseHelper = new DatabaseHelper(this);
 
         int quantity_value = databaseHelper.getCountSize(item_name);
 
@@ -90,6 +85,18 @@ public class IndividualSelectionActivity extends AppCompatActivity {
 
             }
         });
+
+    }
+
+    @Override
+    public void initview() {
+        name = findViewById(R.id.name);
+        price = findViewById(R.id.price);
+        plus=findViewById(R.id.plus);
+        imageview = findViewById(R.id.imageview);
+        rating = findViewById(R.id.rating);
+        minus = findViewById(R.id.minus);
+        quantity = findViewById(R.id.quantity);
 
     }
 }
