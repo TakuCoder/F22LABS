@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">F22LABS</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Thiyagu</string>
+    <string name="nav_header_subtitle">thiyagucoder@gmail.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+    <string name="Rs">\u20B9</string>
+    <string name="description_product1">Why waste a lot of time preparing lunch or dinner, when you can speed up the process by investing in this convection microwave oven from IFB. It is designed with a host of convenient cooking features such as Multi-stage Cooking, Combination Cooking, Keep Warm, and ten Auto Cook Menus to make your life a lot easier. Features such as Steam Clean and Deodorize ensures that you don’t have to spend a lot of time cleaning up after you are done cooking as well.</string>
+    <string name="description_product2"> Watch movies, sports, series and much more with vivid and lifelike details on the Samsung Series HD Ready LED TV. With its HD Ready Screen and 20 W Speaker Output, this TV will enhance your viewing as well as your aural experience. What’s more, you can also plug any USB-enabled device into this TV and enjoy unlimited streaming.
+</string>
+    <string name="description_product3">Dyson V10 Absolute Pro cord-free vacuum provides up to 60 minutes of powerful fade-free suction to remove hidden dust from your home. The Radial Root Cyclones-a concentric array of 14 cyclones that captures microscopic dust. Powered by the Dyson digital motor V10, it creates powerful suction to deep clean every nook and cranny in your home. Whole machine filtration captures dust and seals in 99.97% of microns as small as 0.3 microns. </string>
+    <string name="description_product4">A functional desk for the multitasker in you, we present the DWS 34755 series. The Wenge L shaped desk boasts of a platform top supported by a central pillar that runs the length of the table. The Desk facade is fully covered on 3 sides giving the user a sense of privacy. This table comes with a bevy of utilities likea file cabinet and a set of 2 drawers. The side runner is fixed and comes with added drawers and a cabinet for even more storage options.</string>
+    <string name="description_product5">This exclusive and beautifully crafted Teak Wood Royal Living Room Chair will add style and function to any space in your home. Featuring strong and durable construction, this chair will be a stylish and timeless piece of furniture for your living room. The Lion like contruction and the traditional style, makes this functional piece a welcome addition to your interiors. Pamper yourself and your loved ones with this comfortable seating.</string>
+    <string name="description_product6">Completely Knock-Down Godrej Almirah Can Be Dismantled And Re - Assembled Multiple Times Thick And Robust Doors, Made Of Dent Resistant Steel. Bright Two Tone Shades : Neutral Body With Accent Doors Clean Details- Handles Less Locker: Key In Unlocked Position Cannot Be Removed From The Door, Affording It To Become A Handle For Pulling . This Provides Additional Security As On Unlocked Condition . The Key Reminds The User That The Locker Is Not Locked. </string>
+    <string name="desc" />
+    <string name="cart_is_empty">CART IS EMPTY</string>
+    <string name="total_price">GRAND TOTAL</string>
+    <string name="add_to_cart">ADD TO CART</string>
+    <string name="sample">sample</string>
+    <string name="electronics">Electronics</string>
+    <string name="furnitures">Furnitures</string>
+    <string name="retail_store">Retail-Store</string>
+    <string name="added_success">Product added to cart!</string>
+    <string name="price_low_to_high">Price Low to High</string>
+    <string name="rating">Rating</string>
+</resources>
