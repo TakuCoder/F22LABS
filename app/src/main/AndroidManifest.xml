@@ -17,7 +17,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".IndividualSelectionActivityModule.IndividualSelectionActivity" />
-        <activity android:name=".Activities.ActivityCart"></activity>
+        <activity android:name=".ActivityCartModule.CartActivity"></activity>
     </application>
 
 </manifest>

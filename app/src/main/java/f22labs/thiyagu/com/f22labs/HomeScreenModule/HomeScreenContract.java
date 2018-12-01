@@ -1,5 +1,7 @@
 package f22labs.thiyagu.com.f22labs.HomeScreenModule;
 
+import android.content.Context;
+import android.view.MenuItem;
 import android.view.View;
 
 import java.util.List;
@@ -25,6 +27,12 @@ public class HomeScreenContract {
         void displayFoodItems(List<Food> foodResponse);
 
         void displayError(String s);
+
+        void ShowFilterPopup();
+
+        void priceSelection(List<Food> foods);
+        void ratingSelection(List<Food> foods);
+        void movetoCart();
     }
 
     interface Presenter {
@@ -34,7 +42,10 @@ public class HomeScreenContract {
 
         void resume();
 
+
+        void onOptionsItemSelected(MenuItem item);
        // void setOnMenuItemClickListener(android.view.View view);
+        void popupMenuLsitener(MenuItem item);
 
     }
 

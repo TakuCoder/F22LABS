@@ -182,6 +182,7 @@ public class FoodRecyclerViewAdapter extends RecyclerView.Adapter<FoodRecyclerVi
         Button plus, minus;
         CardView card_view;
 
+
         public DataObjectHolder(View itemView) {
             super(itemView);
             card_view = itemView.findViewById(R.id.card_view);
@@ -193,6 +194,7 @@ public class FoodRecyclerViewAdapter extends RecyclerView.Adapter<FoodRecyclerVi
             minus = itemView.findViewById(R.id.minus);
             quantity = itemView.findViewById(R.id.quantity);
             Log.i(LOG_TAG, "Adding Listener");
+
 
         }
 

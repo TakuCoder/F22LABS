@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import f22labs.thiyagu.com.f22labs.ActivityCartModule.CartActivityContract;
 import f22labs.thiyagu.com.f22labs.Data.CartPojo;
 import f22labs.thiyagu.com.f22labs.Database.DatabaseHelper;
 import f22labs.thiyagu.com.f22labs.R;
@@ -24,7 +25,7 @@ public class CartViewAdapter extends RecyclerView.Adapter<CartViewAdapter.DataOb
     private static final String LOG_TAG = "CartViewAdapter";
     DatabaseHelper databaseHelper;
     private List<CartPojo> mDataset;
-
+    CartActivityContract.view vieww;
     //BitmapUtils bitmapUtils = BitmapUtils.getInstance();
 
 
@@ -59,9 +60,12 @@ public class CartViewAdapter extends RecyclerView.Adapter<CartViewAdapter.DataOb
     }
 
 
-    public CartViewAdapter(List<CartPojo> myDataset, Context context) {
+    public CartViewAdapter(List<CartPojo> myDataset, Context context,CartActivityContract.view view) {
         mDataset = myDataset;
+
         databaseHelper = DatabaseHelper.getInstance(context);
+
+    this.vieww = view;
     }
 
     @Override
@@ -83,7 +87,7 @@ public class CartViewAdapter extends RecyclerView.Adapter<CartViewAdapter.DataOb
         holder.quantity.setText(quantity_value);
         holder.total_price.setText(String.valueOf(databaseHelper.TotalPricePerItem(mDataset.get(position).getName())));
         holder.quantity_text.setText(quantity_value);
-
+      //  vieww.updateGrandpriceTotal(databaseHelper.getGrandPrice());
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -146,6 +150,10 @@ public class CartViewAdapter extends RecyclerView.Adapter<CartViewAdapter.DataOb
                     holder.quantity.setText(String.valueOf(databaseHelper.getCountSize(mDataset.get(position).getName()))); //refine needed
                     int quantity = databaseHelper.getCountSize(mDataset.get(position).getName());
                     databaseHelper.UpdatePrice(mDataset.get(position).getName(), mDataset.get(position).getPrice(), quantity);
+                    holder.quantity_text.setText(String.valueOf(quantity));
+                    holder.total_price.setText(String.valueOf(databaseHelper.TotalPricePerItem(mDataset.get(position).getName())));
+
+                    vieww.updateGrandpriceTotal(databaseHelper.getGrandPrice());
 
                 }
 

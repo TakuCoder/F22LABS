@@ -16,15 +16,14 @@ import com.facebook.shimmer.ShimmerFrameLayout;
 
 import java.util.ArrayList;
 import java.util.List;
-import f22labs.thiyagu.com.f22labs.Activities.ActivityCart;
+
+import f22labs.thiyagu.com.f22labs.ActivityCartModule.CartActivity;
 import f22labs.thiyagu.com.f22labs.Adapter.FoodRecyclerViewAdapter;
 import f22labs.thiyagu.com.f22labs.Data.Food;
-import f22labs.thiyagu.com.f22labs.Database.DatabaseHelper;
 import f22labs.thiyagu.com.f22labs.R;
 
 
-
-public class HomeScreenActivity extends AppCompatActivity implements HomeScreenContract.View{
+public class HomeScreenActivity extends AppCompatActivity implements HomeScreenContract.View {
 
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
@@ -32,18 +31,11 @@ public class HomeScreenActivity extends AppCompatActivity implements HomeScreenC
     private List<Food> list = new ArrayList<>();
     private ShimmerFrameLayout mShimmerViewContainer;
     HomeScreenContract.Presenter presenter;
-    DatabaseHelper databaseHelper ;
+
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_card_view);
-
-
-
-
-
-
-
-
 
         InitView();
         InitPresenter();
@@ -51,57 +43,6 @@ public class HomeScreenActivity extends AppCompatActivity implements HomeScreenC
         startShimmer();
         getFoodList();
 
-//        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
-//        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
-//        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
-//        httpClient.addInterceptor(logging);
-//        Retrofit retrofit = new Retrofit.Builder().client(httpClient.build()).addConverterFactory(GsonConverterFactory.create()).baseUrl(SERVER_URL).build();
-//        NetworkInterface apiService = retrofit.create(NetworkInterface.class);
-
-
-
-//
-//        Call<List<Food>> call = apiService.getFood();
-//        call.enqueue(new Callback<List<Food>>() {
-//            @Override
-//            public void onResponse(Call<List<Food>> call, Response<List<Food>> response) {
-//
-//                list = response.body();
-//                mAdapter = new FoodRecyclerViewAdapter(list,HomeScreenActivity.this);
-//                mRecyclerView.setAdapter(mAdapter);
-//
-//
-//                for(int i=0;i<list.size();i++)
-//                {
-//
-//
-//                    FoodPojo foodPojo = new FoodPojo(String.valueOf(list.get(i).getAverageRating()),list.get(i).getImageUrl(),list.get(i).getItemName(),String.valueOf(list.get(i).getItemPrice()));
-////                    databaseHelper.addProduct(foodPojo);
-//
-//                }
-//
-
-//
-//
-//
-//
-//
-//            }
-//
-//            @Override
-//            public void onFailure(Call<List<Food>> call, Throwable t) {
-//
-//                if (t instanceof IOException) {
-//                    Toast.makeText(HomeScreenActivity.this, "this is an actual network failure :( inform the user and possibly retry", Toast.LENGTH_SHORT).show();
-//                    // logging probably not necessary
-//                } else {
-//                    Toast.makeText(HomeScreenActivity.this, "conversion issue! big problems :(", Toast.LENGTH_SHORT).show();
-//                    // todo log to some central bug tracking service
-//                }
-//
-//
-//            }
-//        });
 
     }
 
@@ -113,60 +54,15 @@ public class HomeScreenActivity extends AppCompatActivity implements HomeScreenC
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
 
-       return true;
+        return true;
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId()==R.id.filter)
+    public boolean onOptionsItemSelected(MenuItem item)
 
-        {
-            View menuItemView = findViewById(R.id.filter);
+    {
+        presenter.onOptionsItemSelected(item);
 
-            PopupMenu popupMenu = new PopupMenu(HomeScreenActivity.this,menuItemView);
-            popupMenu.getMenuInflater()
-                    .inflate(R.menu.popup_menu, popupMenu.getMenu());
-
-            popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                @Override
-                public boolean onMenuItemClick(MenuItem menuItem) {
-
-
-
-                    switch (menuItem.getItemId())
-                    {
-
-                        case (R.id.price):
-
-                           list= databaseHelper.sortByPrice();
-                            mAdapter = new FoodRecyclerViewAdapter(list,HomeScreenActivity.this);
-                            mRecyclerView.setAdapter(null);
-                            mRecyclerView.setAdapter(mAdapter);
-                            break;
-
-
-                        case (R.id.rating):
-                            list= databaseHelper.sortByRating();
-                            mAdapter = new FoodRecyclerViewAdapter(list,HomeScreenActivity.this);
-                            mRecyclerView.setAdapter(null);
-                            mRecyclerView.setAdapter(mAdapter);
-
-                            break;
-
-                    }
-
-                    return true;
-                }
-            });
-            popupMenu.show();
-        }
-else if(item.getItemId()==R.id.cart)
-        {
-
-
-            Intent intent = new Intent(HomeScreenActivity.this,ActivityCart.class);
-            startActivity(intent);
-        }
 
         return true;
     }
@@ -175,11 +71,6 @@ else if(item.getItemId()==R.id.cart)
     protected void onResume() {
         super.onResume();
 
-//       // list = presenter.resume();
-////        list = databaseHelper.getAllProducts();
-//      mAdapter = new FoodRecyclerViewAdapter(list,HomeScreenActivity.this);
-//       mRecyclerView.setAdapter(mAdapter);
-//       stopShimmer();
 
         presenter.resume();
 
@@ -187,12 +78,12 @@ else if(item.getItemId()==R.id.cart)
 
     @Override
     public void showToast(String s) {
-        Toast.makeText(HomeScreenActivity.this,s,Toast.LENGTH_LONG).show();
+        Toast.makeText(HomeScreenActivity.this, s, Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void ShowResumeData(List<Food> list) {
-        mAdapter = new FoodRecyclerViewAdapter(list,HomeScreenActivity.this);
+        mAdapter = new FoodRecyclerViewAdapter(list, HomeScreenActivity.this);
         mRecyclerView.setAdapter(mAdapter);
         stopShimmer();
     }
@@ -208,9 +99,8 @@ else if(item.getItemId()==R.id.cart)
     }
 
 
-
     public void InitPresenter() {
-        presenter = new HomeScreenPresenter(this,this);
+        presenter = new HomeScreenPresenter(this, this);
     }
 
     @Override
@@ -225,23 +115,70 @@ else if(item.getItemId()==R.id.cart)
 
     @Override
     public void stopShimmer() {
-                        mShimmerViewContainer.stopShimmerAnimation();
-                mShimmerViewContainer.setVisibility(View.GONE);
+        mShimmerViewContainer.stopShimmerAnimation();
+        mShimmerViewContainer.setVisibility(View.GONE);
     }
 
     @Override
     public void displayFoodItems(List<Food> foodResponse) {
 
-                mAdapter = new FoodRecyclerViewAdapter(foodResponse,HomeScreenActivity.this);
-                mRecyclerView.setAdapter(mAdapter);
+        mAdapter = new FoodRecyclerViewAdapter(foodResponse, HomeScreenActivity.this);
+        mRecyclerView.setAdapter(mAdapter);
     }
 
     @Override
     public void displayError(String s) {
         showToast(s);
     }
-    public void getFoodList()
-    {
-       presenter.getFoodList();
+
+    @Override
+    public void ShowFilterPopup() {
+
+
+        View menuItemView = findViewById(R.id.filter);
+
+        PopupMenu popupMenu = new PopupMenu(HomeScreenActivity.this, menuItemView);
+        popupMenu.getMenuInflater()
+                .inflate(R.menu.popup_menu, popupMenu.getMenu());
+
+        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+
+                presenter.popupMenuLsitener(menuItem);
+
+                return true;
+            }
+        });
+        popupMenu.show();
+
+    }
+
+    @Override
+    public void priceSelection(List<Food> list) {
+
+        mAdapter = new FoodRecyclerViewAdapter(list, HomeScreenActivity.this);
+        mRecyclerView.setAdapter(null);
+        mRecyclerView.setAdapter(mAdapter);
+    }
+
+    @Override
+    public void ratingSelection(List<Food> list) {
+
+        mAdapter = new FoodRecyclerViewAdapter(list, HomeScreenActivity.this);
+        mRecyclerView.setAdapter(null);
+        mRecyclerView.setAdapter(mAdapter);
+    }
+
+    @Override
+    public void movetoCart() {
+
+        Intent intent = new Intent(HomeScreenActivity.this, CartActivity.class);
+        startActivity(intent);
+    }
+
+
+    public void getFoodList() {
+        presenter.getFoodList();
     }
 }

@@ -259,7 +259,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public int getAllCartSize() {
         int size = 0;
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor res = db.rawQuery("select count(*) from " + TABLE_NAME_CARTLIST, null);
+        Cursor res = db.rawQuery("select count(*) from " + TABLE_NAME_CARTLIST + " where " + COLUMN_CART_PRODUCT_QUANTITY + " >= 1", null);
         res.moveToFirst();
         size = res.getInt(0);
         res.close();
