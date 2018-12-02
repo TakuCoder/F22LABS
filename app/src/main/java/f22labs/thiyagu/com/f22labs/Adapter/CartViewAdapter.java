@@ -13,10 +13,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
+import com.bumptech.glide.request.RequestOptions;
 
 import java.util.List;
 
 import f22labs.thiyagu.com.f22labs.ActivityCartModule.CartActivityContract;
+import f22labs.thiyagu.com.f22labs.ActivityCartModule.CartActivtymodel;
 import f22labs.thiyagu.com.f22labs.Data.CartPojo;
 import f22labs.thiyagu.com.f22labs.Database.DatabaseHelper;
 import f22labs.thiyagu.com.f22labs.R;
@@ -26,15 +30,13 @@ public class CartViewAdapter extends RecyclerView.Adapter<CartViewAdapter.DataOb
     DatabaseHelper databaseHelper;
     private List<CartPojo> mDataset;
     CartActivityContract.view vieww;
-    //BitmapUtils bitmapUtils = BitmapUtils.getInstance();
-
-
+    Context context;
+CartActivtymodel cartActivtymodel;
     public static class DataObjectHolder extends RecyclerView.ViewHolder {
         TextView product_name;
         TextView product_price, quantity, totalprice, quantity_text, total_price;
         ImageView imageholder;
         CardView cardView;
-
         Button minus, plus;
 
 
@@ -45,11 +47,9 @@ public class CartViewAdapter extends RecyclerView.Adapter<CartViewAdapter.DataOb
             product_price = itemView.findViewById(R.id.product_price);
             imageholder = itemView.findViewById(R.id.image_holder);
             cardView = itemView.findViewById(R.id.card_view);
-          //  totalprice = itemView.findViewById(R.id.totalprice);
             quantity = itemView.findViewById(R.id.quantity);
-            total_price = itemView.findViewById(R.id.total_price);
+            total_price = itemView.findViewById(R.id.textview_total_price);
             quantity_text = itemView.findViewById(R.id.quantity_text);
-
             minus = itemView.findViewById(R.id.minus);
             plus = itemView.findViewById(R.id.plus);
 
@@ -60,12 +60,12 @@ public class CartViewAdapter extends RecyclerView.Adapter<CartViewAdapter.DataOb
     }
 
 
-    public CartViewAdapter(List<CartPojo> myDataset, Context context,CartActivityContract.view view) {
+    public CartViewAdapter(List<CartPojo> myDataset, Context context, CartActivityContract.view view) {
         mDataset = myDataset;
-
+        this.context = context;
         databaseHelper = DatabaseHelper.getInstance(context);
-
-    this.vieww = view;
+cartActivtymodel =  new CartActivtymodel();
+        this.vieww = view;
     }
 
     @Override
@@ -87,14 +87,10 @@ public class CartViewAdapter extends RecyclerView.Adapter<CartViewAdapter.DataOb
         holder.quantity.setText(quantity_value);
         holder.total_price.setText(String.valueOf(databaseHelper.TotalPricePerItem(mDataset.get(position).getName())));
         holder.quantity_text.setText(quantity_value);
-      //  vieww.updateGrandpriceTotal(databaseHelper.getGrandPrice());
-        holder.cardView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        Glide.with(context).load(mDataset.get(position).getImage())
+        .transition(DrawableTransitionOptions.withCrossFade()).apply(new RequestOptions().override(300, 600)).into(holder.imageholder);
 
 
-            }
-        });
         holder.minus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -103,30 +99,36 @@ public class CartViewAdapter extends RecyclerView.Adapter<CartViewAdapter.DataOb
                 if (b) {
 
                     int ii = databaseHelper.getCountSize(mDataset.get(position).getName()); //to get specific item quantity
-                    Log.v("currentsize", String.valueOf(ii));
+
                     if (ii > 0) {
                         ii = ii - 1;
 
 
-                        databaseHelper.DecreaseQuantity(mDataset.get(position).getName(), ii);
+                        databaseHelper.UpdateQuantity(mDataset.get(position).getName(), ii);
                         holder.quantity.setText(String.valueOf(databaseHelper.getCountSize(mDataset.get(position).getName()))); //refine needed
 
 
                         int quantity = databaseHelper.getCountSize(mDataset.get(position).getName());
                         databaseHelper.UpdatePrice(mDataset.get(position).getName(), mDataset.get(position).getPrice(), quantity);
-                        Log.v("sdasdsad", String.valueOf(quantity));
+                        holder.quantity_text.setText(String.valueOf(quantity));
+                        holder.total_price.setText(String.valueOf(databaseHelper.TotalPricePerItem(mDataset.get(position).getName())));
+
                         if (quantity == 0) {
 
                             deleteItem(position);
                         }
 
-                    } else {
-
-                        //databaseHelper.DecreaseQuantity(mDataset.get(position).getName(), ii);
-                        //deleteItem(position);
                     }
 
-                } else {
+                    if (databaseHelper.getGrandPrice() == 0) {
+                        vieww.updateGrandpriceTotal(databaseHelper.getGrandPrice());
+                        vieww.updateDeliveryPrice(0);
+
+                    } else {
+
+                        vieww.updateGrandpriceTotal(databaseHelper.getGrandPrice()+cartActivtymodel.getDeliveryCharge());
+                    }
+
 
                 }
 
@@ -145,7 +147,7 @@ public class CartViewAdapter extends RecyclerView.Adapter<CartViewAdapter.DataOb
 //found
 
                     ii = ii + 1;
-                    databaseHelper.DecreaseQuantity(mDataset.get(position).getName(), ii);
+                    databaseHelper.UpdateQuantity(mDataset.get(position).getName(), ii);
 
                     holder.quantity.setText(String.valueOf(databaseHelper.getCountSize(mDataset.get(position).getName()))); //refine needed
                     int quantity = databaseHelper.getCountSize(mDataset.get(position).getName());
@@ -153,9 +155,11 @@ public class CartViewAdapter extends RecyclerView.Adapter<CartViewAdapter.DataOb
                     holder.quantity_text.setText(String.valueOf(quantity));
                     holder.total_price.setText(String.valueOf(databaseHelper.TotalPricePerItem(mDataset.get(position).getName())));
 
-                    vieww.updateGrandpriceTotal(databaseHelper.getGrandPrice());
+                    vieww.updateGrandpriceTotal(databaseHelper.getGrandPrice()+cartActivtymodel.getDeliveryCharge());
+
 
                 }
+
 
             }
         });

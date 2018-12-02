@@ -1,8 +1,7 @@
-package f22labs.thiyagu.com.f22labs.IndividualSelectionActivityModule;
+package f22labs.thiyagu.com.f22labs.ActivityDescriptionModule;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -11,18 +10,17 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 
-import f22labs.thiyagu.com.f22labs.Data.CartDetails;
-import f22labs.thiyagu.com.f22labs.Database.DatabaseHelper;
 import f22labs.thiyagu.com.f22labs.R;
 
-public class IndividualSelectionActivity extends AppCompatActivity implements IndividualSelectionContract.view {
+public class DescriptionActivity extends AppCompatActivity implements DescriptionContract.view {
     Button minus;
-    IndividualSelectionContract.presenter presenter;
+    DescriptionContract.presenter presenter;
     Button plus;
     ImageView imageview;
     TextView name, price, rating, textView_quantity;
     private String item_name;
     private String item_price;
+    private String image;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,8 +28,10 @@ public class IndividualSelectionActivity extends AppCompatActivity implements In
         setContentView(R.layout.activity_individual_selection);
         item_name = getIntent().getStringExtra("itemname");
         item_price = getIntent().getStringExtra("price");
+        item_price = getIntent().getStringExtra("price");
+        image = getIntent().getStringExtra("image");
         initview();
-        presenter = new IndividualSelectionPresenter(this, this);
+        presenter = new DescriptionPresenter(this, this);
         getQuantity(item_name);
         name.setText(item_name);
         price.setText("Rs " + item_price);
@@ -44,7 +44,7 @@ public class IndividualSelectionActivity extends AppCompatActivity implements In
             public void onClick(View view) {
 
 
-                presenter.plusOnClickListener(view, item_name, item_price);
+                presenter.plusOnClickListener(view, item_name, item_price,image);
 
 
             }

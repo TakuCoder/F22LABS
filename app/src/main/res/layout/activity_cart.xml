@@ -41,7 +41,7 @@
             android:weightSum="10">
 
             <EditText
-                android:id="@+id/coupon"
+                android:id="@+id/textview_coupon"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical|center_horizontal"
@@ -49,7 +49,7 @@
                 android:layout_marginStart="1dp"
                 android:layout_weight="5"
                 android:gravity="center_horizontal|center_vertical"
-                android:hint="coupon code"
+                android:hint="@string/coupon_code"
                 android:textColor="@android:color/black"
                 android:textSize="15sp"
                 android:textStyle="bold" />
@@ -63,7 +63,7 @@
                 android:layout_gravity="center_vertical|center_horizontal"
                 android:layout_weight="5"
                 android:gravity="center_horizontal|center_vertical"
-                android:text="REDEEM"
+                android:text="@string/redeem"
                 android:textColor="@android:color/black"
                 android:textSize="20sp"
                 android:textStyle="bold" />
@@ -83,13 +83,13 @@
                 android:layout_marginStart="1dp"
                 android:layout_weight="5"
                 android:gravity="left|center_vertical|center_horizontal"
-                android:text="DELIVERY CHARGES"
+                android:text="@string/delivery_charges"
                 android:textColor="@android:color/black"
                 android:textSize="15sp"
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/delivery_price"
+                android:id="@+id/textview_delivery_price"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
@@ -97,7 +97,7 @@
                 android:layout_gravity="center_vertical|center_horizontal"
                 android:layout_weight="5"
                 android:gravity="center_horizontal|center_vertical"
-                android:text="Rs 30"
+
                 android:textColor="@android:color/black"
                 android:textSize="15sp"
                 android:textStyle="bold" />
@@ -133,7 +133,6 @@
                 android:layout_gravity="center_vertical|center_horizontal"
                 android:layout_weight="5"
                 android:gravity="center_horizontal|center_vertical"
-                android:text="sss"
                 android:textColor="@android:color/black"
                 android:textSize="15sp"
                 android:textStyle="bold" />

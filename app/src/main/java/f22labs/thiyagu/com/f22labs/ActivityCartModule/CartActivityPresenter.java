@@ -1,80 +1,60 @@
 package f22labs.thiyagu.com.f22labs.ActivityCartModule;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
+
 
 import f22labs.thiyagu.com.f22labs.Database.DatabaseHelper;
 
-public class CartActivityPresenter implements CartActivityContract.presenter{
+public class CartActivityPresenter implements CartActivityContract.presenter {
     CartActivityContract.view view;
     DatabaseHelper databaseHelper;
-Context context ;
-    public CartActivityPresenter(CartActivityContract.view view, Context context)
-    {
+    Context context;
+    CartActivtymodel cartActivtymodel = new CartActivtymodel();
 
-this.view = view;
-this.context = context;
-databaseHelper = DatabaseHelper.getInstance(context);
+    public CartActivityPresenter(CartActivityContract.view view, Context context) {
+
+        this.view = view;
+        this.context = context;
+        databaseHelper = DatabaseHelper.getInstance(context);
     }
 
 
     @Override
-    public void  getInitialGrandPrice() {
-        CartActivtymodel cartActivtymodel = new CartActivtymodel();
-        int i=databaseHelper.getGrandPrice();
+    public void getInitialGrandPrice() {
 
-        if(i>1)
-        {
-
-            view.updateGrandpriceTotal(i+cartActivtymodel.getDeliveryCharge());
+        int i = databaseHelper.getGrandPrice();
+        updateGrand(i);
 
 
-        }
-        else
-        {
-
-            view.updateGrandpriceTotal(i);
-
-        }
     }
 
     @Override
-    public void RedeemOnClickListener(View vieww,String coupon_value,int grandtotal) {
-        switch (coupon_value)
-        {
+    public void RedeemOnClickListener(View vieww, String coupon_value) {
+
+        int totalprice = databaseHelper.getGrandPrice();
+
+        switch (coupon_value) {
 
             case "F22LABS":
 
-                if(grandtotal>=400)
-                {
-                    grandtotal = grandtotal-((grandtotal*20)/100);
-                   // textview_grandprice.setText("\u20B9 "+String.valueOf(grandtotal));
-                }
-                else {
-
-
+                if (totalprice >= 400) {
+                    totalprice = totalprice - ((totalprice * 20) / 100);
+                    updateGrand(totalprice);
+                    view.updateDeliveryPrice(cartActivtymodel.getDeliveryCharge());
+                } else {
                     view.ShowToast("Sorry you cant avail this offer");
 
                 }
-
-
                 break;
             case "FREEDEL":
+                if (totalprice >= 100) {
+                    totalprice = totalprice - 30;
+                    view.updateGrandpriceTotal(totalprice);
+                    view.updateDeliveryPrice(0);
 
-                if(grandtotal>=100)
-                {
 
-                    grandtotal = grandtotal-30;
-                    //textview_grandprice.setText(String.valueOf(grandtotal));
-                   // delivery_price.setText("\u20B9 "+ 0);
-
-                }
-                else {
-
-                   // Toast.makeText(CartActivity.this,"Sorry you cant avail this offer",Toast.LENGTH_LONG).show();
-
+                } else {
                     view.ShowToast("Sorry you cant avail this offer");
                 }
 
@@ -82,9 +62,6 @@ databaseHelper = DatabaseHelper.getInstance(context);
 
 
             default:
-
-
-
                 view.ShowToast("no offer found");
 
 
@@ -93,5 +70,24 @@ databaseHelper = DatabaseHelper.getInstance(context);
         }
 
 
+    }
+
+    @Override
+    public void updateGrand(int i) {
+        if (i > 1) {
+
+            view.updateGrandpriceTotal(i + cartActivtymodel.getDeliveryCharge());
+
+
+        } else {
+
+            view.updateGrandpriceTotal(i);
+
+        }
+    }
+
+    @Override
+    public void updateDelivery() {
+        view.updateDeliveryPrice(cartActivtymodel.getDeliveryCharge());
     }
 }

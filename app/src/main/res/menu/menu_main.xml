@@ -7,7 +7,7 @@
     <item
         android:id="@+id/filter"
         android:orderInCategory="300"
-        android:title="filter"
+        android:title="@string/filter"
         android:icon="@drawable/filter"
         app:showAsAction="ifRoom">
 
@@ -15,8 +15,8 @@
     <item
         android:id="@+id/cart"
 
-        android:title="cart"
-        android:icon="@drawable/ic_shopping_cart_black_24dp"
+        android:title="@string/cart"
+        android:icon="@drawable/cart"
         app:showAsAction="ifRoom">
 
     </item>

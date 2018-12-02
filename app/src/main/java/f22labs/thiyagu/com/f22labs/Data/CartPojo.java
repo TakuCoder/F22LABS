@@ -7,15 +7,17 @@ public class CartPojo {
     private int Quantity;
     private String Name;
     private int Price;
-    private  int totalprice;
+    private  int TotalPrice;
+    private String Image;
 
-    public CartPojo(int Quantity, String Name, int Price, int totalprice) {
+    public CartPojo(int Quantity, String Name, int Price, int TotalPrice, String image) {
 
 
         this.Quantity = Quantity;
         this.Name = Name;
         this.Price = Price;
-        this.totalprice = totalprice;
+        this.TotalPrice = TotalPrice;
+        this.Image = image;
 
 
     }
@@ -34,7 +36,12 @@ public class CartPojo {
         return Quantity;
     }
 
-    public int getTotalprice() {
-        return totalprice;
+    public int getTotalPrice() {
+        return TotalPrice;
+    }
+
+
+    public String getImage() {
+        return Image;
     }
 }

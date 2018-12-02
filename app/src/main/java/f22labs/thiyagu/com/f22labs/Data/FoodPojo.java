@@ -4,16 +4,16 @@ public class FoodPojo {
 
     private String averageRating;
 
-    private String imagebase64;
+    private String image;
 
     private String itemName;
 
     private String itemPrice;
 
 
-    public FoodPojo(String averageRating, String imagebase64, String itemName, String itemPrice) {
+    public FoodPojo(String averageRating, String image, String itemName, String itemPrice) {
         this.averageRating = averageRating;
-        this.imagebase64 = imagebase64;
+        this.image = image;
         this.itemName = itemName;
         this.itemPrice = itemPrice;
 
@@ -23,8 +23,8 @@ public class FoodPojo {
         return averageRating;
     }
 
-    public String getImagebase64() {
-        return imagebase64;
+    public String getImage() {
+        return image;
     }
 
     public String getItemName() {

@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:padding="10dp"
     android:layout_height="match_parent"
-    tools:context=".IndividualSelectionActivityModule.IndividualSelectionActivity">
+    android:orientation="vertical"
+    tools:context=".ActivityDescriptionModule.DescriptionActivity">
 
 
     <android.support.v7.widget.CardView
@@ -41,7 +42,6 @@
                         android:id="@+id/name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Sandwich"
                         android:textColor="#000000"
                         android:textSize="20sp"
                         android:textStyle="bold" />
@@ -50,7 +50,7 @@
                         android:id="@+id/price"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Rs 120"
+
                         android:textColor="#000000"
                         android:textSize="15sp" />
 
@@ -68,8 +68,7 @@
                             android:id="@+id/rating"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="10dp"
-                            android:text="3.5" />
+                            android:layout_marginLeft="10dp" />
 
                     </LinearLayout>
 
@@ -101,7 +100,6 @@
                             android:layout_height="match_parent"
                             android:background="@android:color/white"
                             android:gravity="center_vertical|center_horizontal"
-                            android:text="0"
                             android:textColor="@android:color/black" />
 
                         <Button
@@ -124,5 +122,16 @@
 
 
     </android.support.v7.widget.CardView>
+<android.support.v7.widget.CardView
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:padding="5dp"
+        android:text="@string/dummy_desc" />
+
+</android.support.v7.widget.CardView>
 </LinearLayout>

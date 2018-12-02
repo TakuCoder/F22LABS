@@ -3,12 +3,10 @@ package f22labs.thiyagu.com.f22labs.HomeScreenModule;
 import android.content.Context;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
+
 
 import java.util.List;
 
-import f22labs.thiyagu.com.f22labs.Adapter.FoodRecyclerViewAdapter;
-import f22labs.thiyagu.com.f22labs.App;
 import f22labs.thiyagu.com.f22labs.Data.Food;
 import f22labs.thiyagu.com.f22labs.Data.FoodPojo;
 import f22labs.thiyagu.com.f22labs.Database.DatabaseHelper;
@@ -51,7 +49,6 @@ public class HomeScreenPresenter implements HomeScreenContract.Presenter {
 
 
         List<Food> list = DatabaseHelper.getInstance(context).getAllProducts();
-        Log.v("sdsad", String.valueOf(list.size()));
         mvi.ShowResumeData(list);
     }
 
@@ -59,15 +56,13 @@ public class HomeScreenPresenter implements HomeScreenContract.Presenter {
     public void onOptionsItemSelected(MenuItem item) {
 
 
-                if(item.getItemId()==R.id.filter)
+        if (item.getItemId() == R.id.filter)
 
         {
             mvi.ShowFilterPopup();
-           // mvi.showFilerPopup();
 
-        }
-        else if(item.getItemId()==R.id.cart)
-        {
+
+        } else if (item.getItemId() == R.id.cart) {
 
 
             mvi.movetoCart();
@@ -80,27 +75,19 @@ public class HomeScreenPresenter implements HomeScreenContract.Presenter {
     public void popupMenuLsitener(MenuItem item) {
 
 
-        switch (item.getItemId())
-        {
+        switch (item.getItemId()) {
 
             case (R.id.price):
-mvi.priceSelection(DatabaseHelper.getInstance(context).sortByPrice());
-//                list= databaseHelper.sortByPrice();
-//                mAdapter = new FoodRecyclerViewAdapter(list,HomeScreenActivity.this);
-//                mRecyclerView.setAdapter(null);
-//                mRecyclerView.setAdapter(mAdapter);
+                mvi.priceSelection(DatabaseHelper.getInstance(context).sortByPrice());
+
                 break;
 
 
             case (R.id.rating):
-//                list= databaseHelper.sortByRating();
-//                mAdapter = new FoodRecyclerViewAdapter(list,HomeScreenActivity.this);
-//                mRecyclerView.setAdapter(null);
-//                mRecyclerView.setAdapter(mAdapter);
-mvi.ratingSelection(DatabaseHelper.getInstance(context).sortByRating());
+
+                mvi.ratingSelection(DatabaseHelper.getInstance(context).sortByRating());
 
                 break;
-
 
 
         }
@@ -131,20 +118,20 @@ mvi.ratingSelection(DatabaseHelper.getInstance(context).sortByRating());
 
                 }
                 mvi.displayFoodItems(foods);
-                mvi.stopShimmer();
+
             }
 
             @Override
             public void onError(Throwable e) {
                 Log.d(TAG, "Error" + e);
                 e.printStackTrace();
-                mvi.displayError("Error fetching Movie Data");
+                mvi.displayError("Error fetching Food list");
             }
 
             @Override
             public void onComplete() {
                 Log.d(TAG, "Completed");
-                mvi.hideProgressBar();
+                mvi.stopShimmer();
             }
         };
 

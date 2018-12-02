@@ -103,15 +103,7 @@ public class HomeScreenActivity extends AppCompatActivity implements HomeScreenC
         presenter = new HomeScreenPresenter(this, this);
     }
 
-    @Override
-    public void showProgressBar() {
 
-    }
-
-    @Override
-    public void hideProgressBar() {
-
-    }
 
     @Override
     public void stopShimmer() {

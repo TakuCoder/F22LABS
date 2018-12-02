@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,20 +19,20 @@ import com.bumptech.glide.request.RequestOptions;
 
 import java.util.List;
 
-import f22labs.thiyagu.com.f22labs.IndividualSelectionActivityModule.IndividualSelectionActivity;
+import f22labs.thiyagu.com.f22labs.ActivityDescriptionModule.DescriptionActivity;
 import f22labs.thiyagu.com.f22labs.Data.CartDetails;
 import f22labs.thiyagu.com.f22labs.Data.Food;
 import f22labs.thiyagu.com.f22labs.Database.DatabaseHelper;
 import f22labs.thiyagu.com.f22labs.R;
 
-public class FoodRecyclerViewAdapter extends RecyclerView.Adapter<FoodRecyclerViewAdapter.DataObjectHolder> {
+public class FoodRecyclerViewAdapter extends RecyclerView.Adapter < FoodRecyclerViewAdapter.DataObjectHolder > {
     private static String LOG_TAG = "FoodRecyclerViewAdapter";
-    private List<Food> mDataset;
+    private List < Food > mDataset;
     private Context context;
     DatabaseHelper databaseHelper;
 
 
-    public FoodRecyclerViewAdapter(List<Food> myDataset, Context context) {
+    public FoodRecyclerViewAdapter(List < Food > myDataset, Context context) {
         mDataset = myDataset;
         this.context = context;
         databaseHelper = new DatabaseHelper(context);
@@ -54,13 +53,10 @@ public class FoodRecyclerViewAdapter extends RecyclerView.Adapter<FoodRecyclerVi
         holder.rating.setText(String.valueOf(mDataset.get(position).getAverageRating()));
         holder.quantity.setText(String.valueOf(databaseHelper.getCountSize(mDataset.get(position).getItemName()))); //refine needed
         Glide.with(context).load(mDataset.get(position).getImageUrl())
-                //.placeholder(R.drawable.piwo_48)
-                //.transform(new CircleTransform(context))
-
                 .transition(DrawableTransitionOptions.withCrossFade()).apply(new RequestOptions().override(300, 600)).into(holder.imageView);
 
 
-        Log.v("sdasdsad", String.valueOf(databaseHelper.getCountSize(mDataset.get(position).getItemName())));
+
 
         holder.plus.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,17 +65,17 @@ public class FoodRecyclerViewAdapter extends RecyclerView.Adapter<FoodRecyclerVi
                 int ii = databaseHelper.getCountSize(mDataset.get(position).getItemName());
 
 
-                Log.v("asdasdsd", String.valueOf(ii));
+
 
 
                 boolean b = databaseHelper.find(mDataset.get(position).getItemName());
 
 
                 if (b) {
-//found
+                    //found
 
                     ii = ii + 1;
-                    databaseHelper.DecreaseQuantity(mDataset.get(position).getItemName(), ii);
+                    databaseHelper.UpdateQuantity(mDataset.get(position).getItemName(), ii);
 
                     holder.quantity.setText(String.valueOf(databaseHelper.getCountSize(mDataset.get(position).getItemName()))); //refine needed
                     int quantity = databaseHelper.getCountSize(mDataset.get(position).getItemName());
@@ -89,10 +85,10 @@ public class FoodRecyclerViewAdapter extends RecyclerView.Adapter<FoodRecyclerVi
                     //not found
 
 
-                    databaseHelper.addToCart(new CartDetails(ii, mDataset.get(position).getItemName(), String.valueOf(mDataset.get(position).getItemPrice())));
+                    databaseHelper.addToCart(new CartDetails(ii, mDataset.get(position).getItemName(), String.valueOf(mDataset.get(position).getItemPrice()), mDataset.get(position).getImageUrl()));
 
                     ii = ii + 1;
-                    databaseHelper.DecreaseQuantity(mDataset.get(position).getItemName(), ii);
+                    databaseHelper.UpdateQuantity(mDataset.get(position).getItemName(), ii);
 
                     holder.quantity.setText(String.valueOf(databaseHelper.getCountSize(mDataset.get(position).getItemName()))); //refine needed
 
@@ -120,8 +116,7 @@ public class FoodRecyclerViewAdapter extends RecyclerView.Adapter<FoodRecyclerVi
                     if (ii > 0) {
                         ii = ii - 1;
 
-
-                        databaseHelper.DecreaseQuantity(mDataset.get(position).getItemName(), ii);
+                        databaseHelper.UpdateQuantity(mDataset.get(position).getItemName(), ii);
                         holder.quantity.setText(String.valueOf(databaseHelper.getCountSize(mDataset.get(position).getItemName()))); //refine needed
 
 
@@ -144,11 +139,12 @@ public class FoodRecyclerViewAdapter extends RecyclerView.Adapter<FoodRecyclerVi
             @Override
             public void onClick(View view) {
 
-                Intent intent = new Intent(context, IndividualSelectionActivity.class);
+                Intent intent = new Intent(context, DescriptionActivity.class);
                 intent.putExtra("itemname", mDataset.get(position).getItemName());
                 intent.putExtra("url", mDataset.get(position).getImageUrl());
                 intent.putExtra("price", String.valueOf(mDataset.get(position).getItemPrice()));
                 intent.putExtra("rating", String.valueOf(mDataset.get(position).getAverageRating()));
+                intent.putExtra("image", String.valueOf(mDataset.get(position).getImageUrl()));
                 context.startActivity(intent);
             }
         });
@@ -193,7 +189,7 @@ public class FoodRecyclerViewAdapter extends RecyclerView.Adapter<FoodRecyclerVi
             plus = itemView.findViewById(R.id.plus);
             minus = itemView.findViewById(R.id.minus);
             quantity = itemView.findViewById(R.id.quantity);
-            Log.i(LOG_TAG, "Adding Listener");
+
 
 
         }

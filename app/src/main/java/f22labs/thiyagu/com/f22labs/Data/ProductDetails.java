@@ -4,15 +4,15 @@ public class ProductDetails {
     private int Id;
     private String Name;
     private String Image;
-    private String Feedback;
+    private String AverageRating;
     private int Price;
 
 
-    public ProductDetails(int id, String name, String image, String feedback, int price) {
+    public ProductDetails(int id, String name, String image, String averageRating, int price) {
         Id = id;
         Name = name;
         Image = image;
-        Feedback = feedback;
+        AverageRating = averageRating;
         Price = price;
     }
 
@@ -28,8 +28,8 @@ public class ProductDetails {
         return Image;
     }
 
-    public String getFeedback() {
-        return Feedback;
+    public String getAverageRating() {
+        return AverageRating;
     }
 
     public int getPrice() {

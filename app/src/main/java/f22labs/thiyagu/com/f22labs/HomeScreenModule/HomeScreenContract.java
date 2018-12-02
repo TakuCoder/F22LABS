@@ -18,9 +18,6 @@ public class HomeScreenContract {
 
         void ShowResumeData(List<Food> list);
 
-        void showProgressBar();
-
-        void hideProgressBar();
 
         void stopShimmer();
 
